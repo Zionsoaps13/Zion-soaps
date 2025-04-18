@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Zion-soaps/static/css/main.5ee49308.css",
+    "main.js": "/Zion-soaps/static/js/main.ef22b531.js",
+    "static/js/453.ad3e682a.chunk.js": "/Zion-soaps/static/js/453.ad3e682a.chunk.js",
+    "index.html": "/Zion-soaps/index.html",
+    "main.5ee49308.css.map": "/Zion-soaps/static/css/main.5ee49308.css.map",
+    "main.ef22b531.js.map": "/Zion-soaps/static/js/main.ef22b531.js.map",
+    "453.ad3e682a.chunk.js.map": "/Zion-soaps/static/js/453.ad3e682a.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.5ee49308.css",
+    "static/js/main.ef22b531.js"
+  ]
+}
