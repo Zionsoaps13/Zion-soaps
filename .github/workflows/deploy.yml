@@ -1,44 +1,35 @@
-name: Deploy React App to GitHub Pages
+name: Deploy Website
 
 on:
   push:
     branches:
-      - master  # Trigger deployment when pushing to the 'master' branch
+      - master
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest  # Use the latest Ubuntu runner
-
+  build:
+    runs-on: ubuntu-latest
     steps:
-    # Step 1: Checkout the repository
-    - name: Checkout repository
-      uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-    # Step 2: Set up Node.js environment
     - name: Set up Node.js
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v3
       with:
-        node-version: '22.14.0'  # Specify the Node.js version used in your project
-    
-    # Step 3: Install dependencies
+        node-version: '16'  # Use the appropriate Node.js version
+
+    - name: Cache Node.js modules
+      uses: actions/cache@v3
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-modules-
+
     - name: Install dependencies
       run: npm install
 
-    # Step 4: Build the React app
-    - name: Build app
+    - name: Build the app
       run: npm run build
-    
-    # Step 5: Deploy to GitHub Pages
+
     - name: Deploy to GitHub Pages
       run: npm run deploy
-      env:
-        CI: false
-
-    # Step 6 (Optional): Cache node_modules for faster builds in the future
-    - name: Cache Node modules
-      uses: actions/cache@v2
-      with:
-        path: node_modules
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
