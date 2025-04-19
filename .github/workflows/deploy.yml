@@ -3,43 +3,45 @@ name: Deploy Website
 on:
   push:
     branches:
-      - master
+      - master  # Trigger deployment when there's a push to the master branch
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Runs the job on the latest Ubuntu environment
 
     steps:
     # Step 1: Checkout the code
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v2  # This checks out your repository code
 
-    # Step 2: Set up Node.js (use your preferred version)
+    # Step 2: Set up Node.js (change version if necessary)
     - name: Set up Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v3  # Ensures Node.js is installed
       with:
-        node-version: '16'  # or another version you prefer
+        node-version: '16'  # You can change this to the version you are using
 
     # Step 3: Install dependencies
     - name: Install dependencies
       run: |
-        npm install
+        npm install  # Installs your project's dependencies from package.json
 
-    # Step 4: Build the project
+    # Step 4: Build the project (this example assumes you're using a build process like React or Vue)
     - name: Build
       run: |
-        npm run build
+        npm run build  # This runs the build script (for React, Vue, etc.)
 
     # Step 5: Deploy to GitHub Pages
     - name: Deploy to GitHub Pages
-      uses: JamesIves/github-pages-deploy-action@v4
+      uses: JamesIves/github-pages-deploy-action@v4  # Deploys to GitHub Pages
       with:
-        branch: gh-pages  # This is where the site will be deployed
-        folder: build     # Folder to deploy (the build folder)
+        branch: gh-pages  # The target branch for deployment
+        folder: build     # The folder that contains your build files (change if needed)
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use the GitHub token for authentication
 
-    # Step 6: Cache dependencies for faster builds
+    # Step 6: Cache Node.js modules (this step helps to speed up builds)
     - name: Cache Node.js modules
-      uses: actions/cache@v3
+      uses: actions/cache@v3  # Caches npm dependencies to speed up future builds
       with:
         path: ~/.npm
         key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
