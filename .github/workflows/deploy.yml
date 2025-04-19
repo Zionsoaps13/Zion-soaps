@@ -1,31 +1,42 @@
-name: Build and Deploy React App
+name: Build and Deploy
 
 on:
   push:
     branches:
-      - master  
+      - main
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    # Checkout the repository
+    - name: Checkout repository
       uses: actions/checkout@v3
 
+    # Set up Git configuration 
+    - name: Set up Git config
+      run: |
+        git config --global user.name "Your Name"
+        git config --global user.email "your-email@example.com"
+    
+    # Set up Node.js 
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '16' 
+        node-version: '16'  # Specify your node version
+    
+    # Install dependencies 
     - name: Install dependencies
-      run: npm install
+      run: |
+        npm install
 
-    - name: Build the app
-      run: npm run build
+    # Build the project 
+    - name: Build the project
+      run: |
+        npm run build
 
-    - name: Deploy to GitHub Pages
-      uses: jamesIves/github-pages-deploy-action@v4
-      with:
-        branch: gh-pages 
-        folder: build    
-        token: ${{ secrets.GH_TOKEN }}  
+    # Deploy 
+    - name: Deploy to GitHub Pages (or any deploy action)
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
